@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>VSP</title>
+    <style>
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 24px;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-110vh);
+      opacity: 0;
+    }
+  }
+  .confetti {
+  position: fixed;
+  top: -10px;
+  z-index: 50;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+<body class="bg-pink-600 flex justify-center items-center min-h-screen">
+    <div class=" h-[400px] w-[400px] border-2 border-white  ml-3 mr-3  rounded-2xl md:h-[450px] md:w-[450px]">
+      <div id="mainContent">
+         <div class="flex justify-center items-center">
+            <img src="/dist/vsp1.jpeg" alt="his photo" class="h-32 w-32 rounded-full mt-2 mb-1 border-2 border-white">
+         </div>
+         <div>
+           <p class="font-bold text-white text-2xl text-center animate-slideIn">Hey My Love 💗</p>
+           <p class="text-center text-white font-medium mt-5 mb-5 px-5">"Every smile of yours feels like home. Every moment with you feels like magic. I don’t need a special day to think about you…
+            but I'd love to spend Valentine's Day with you"</p>
+           <p class="text-center text-white font-bold mb-5">Will you be my Valentine?💗</p>
+         </div>
+         <div class=" mt-5 flex justify-center items-center md:mt-8">
+            <button class="text-white bg-pink-400 rounded-xl mx-3 p-2 " id="yesBtn">Yes ❤️</button>
+            <button class="text-white bg-gray-500 rounded-xl p-2 transition-all duration-300" id="noBtn">No 💔</button>
+         </div>
+      </div>
+      
+      <div id="yesContent" class="hidden w-full h-full">
+       <div class="flex flex-col items-center text-center px-6 text-white pt-8">
+
+         <div class="text-xl font-bold mb-4 md:text-3xl md:mb-4">
+            🎉 CONGRATULATIONS 🎉
+         </div>
+
+
+         <p class="text-lg mb-2">
+           You are officially, proudly, and forever
+         </p>
+
+         <p class="text-xl font-semibold mb-3">
+            The Valentine of 💗
+         </p>
+
+         <p class="text-2xl font-sm mb-2 text-red-300">
+            Vridhi Sethi 💗
+         </p>
+
+          <p class="text-base italic mb-2 leading-relaxed md:text-xl">
+            I choose you today. I'll choose you tomorrow.<br>
+            And I'll keep choosing you — always.
+          </p>
+
+          <p class="text-sm font-bold md:text-xl">
+            Happy Valentine's Day 💗
+          </p>
+          <img 
+               src="/dist/vsp21.jpeg"
+               alt="our photo"
+              class="h-28 w-28 rounded-full mt-2 border-2 border-white"
+          />
+
+        </div>
+      </div>
+    </div>
+    <script>
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerText = ["💗", "❤️", "💖"][Math.floor(Math.random() * 3)];
+
+    // random horizontal position
+    heart.style.left = Math.random() * 100 + "vw";
+
+    // random size
+    heart.style.fontSize = Math.random() * 20 + 16 + "px";
+
+    // random animation duration
+    heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+
+    document.body.appendChild(heart);
+
+    // remove after animation
+    setTimeout(() => {
+      heart.remove();
+    }, 6000);
+  }
+
+  // create hearts continuously
+  setInterval(createHeart, 400);
+  const noBtn = document.getElementById("noBtn");
+  let escaped = false;
+
+  function moveButton() {
+    if (!escaped) {
+      const rect = noBtn.getBoundingClientRect();
+
+      // convert normal position → fixed position
+      noBtn.style.position = "fixed";
+      noBtn.style.left = rect.left + "px";
+      noBtn.style.top = rect.top + "px";
+
+      escaped = true;
+    }
+
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+  }
+
+  noBtn.addEventListener("mouseenter", moveButton);
+  noBtn.addEventListener("click", moveButton);
+
+  const yesBtn = document.getElementById("yesBtn");
+  const mainContent = document.getElementById("mainContent");
+  const yesContent = document.getElementById("yesContent");
+
+  let confettiInterval;
+
+  yesBtn.addEventListener("click", () => {
+    mainContent.classList.add("hidden");
+    yesContent.classList.remove("hidden");
+
+    if (!confettiInterval) {
+    confettiInterval = setInterval(createConfetti, 500);
+  }
+  });
+
+  function createConfetti() {
+  const confetti = document.createElement("div");
+  confetti.classList.add("confetti");
+  confetti.innerText = "🎉";
+
+  // random horizontal position
+  confetti.style.left = Math.random() * 100 + "vw";
+
+  // random size
+  confetti.style.fontSize = Math.random() * 20 + 20 + "px";
+
+  // random speed
+  confetti.style.animationDuration = Math.random() * 3 + 3 + "s";
+
+  document.body.appendChild(confetti);
+
+  // remove after falling
+  setTimeout(() => {
+    confetti.remove();
+  }, 6000);
+}
+</script>
+</body>
+</html>
